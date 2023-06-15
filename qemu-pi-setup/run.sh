@@ -1,4 +1,5 @@
-#!/bin/sh
+#!/bin/sh -x
+
 
 QEMU=qemu-system-aarch64
 
@@ -55,18 +56,19 @@ if $ENABLEQTEST; then
 fi
 
 LOGPARAMS=""
-if $LOGPARAMS; then
-	LOGPARAMS="$LOGPARAMS -D /tmp/qemu.log"
-	LOGPARAMS="$LOGPARAMS -d guest_errors"
-fi
+#if $LOGPARAMS; then
+#	LOGPARAMS="$LOGPARAMS -D /tmp/qemu.log"
+#	LOGPARAMS="$LOGPARAMS -d guest_errors"
+#fi
 
 SERIAL=""
-SERIAL="$SERIAL -curses"
+SERIAL="$SERIAL -display curses"
 SERIAL="$SERIAL -serial stdio"
-SERIAL="$SERIAL -monitor unix:/tmp/monitor.sock"
+#SERIAL="$SERIAL -monitor stdio"
+#SERIAL="$SERIAL -monitor unix:/tmp/monitor.sock"
 
 "$QEMU"                                                   \
-	-curses                                           \
+	-display curses	                                           \
 	$SERIAL                                           \
 	-M       raspi3b                                  \
 	-dtb     "$ROOTFS/bcm2710-rpi-3-b-plus.dtb"       \
