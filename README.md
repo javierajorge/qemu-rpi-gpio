@@ -40,6 +40,16 @@ Download a raspbian image using
 ```
 ./qemu-pi-setup/setup.sh
 ```
+Becarefull... before stare you need to define a new user and password. 
+read this https://www.raspberrypi.com/news/raspberry-pi-bullseye-update-april-2022/
+```
+echo 'mypassword' | openssl passwd -6 -stdin
+$6$HSRPDe6rqSBNxBnC$B3dJSx59Qd4HAPu.t0PwhlydBsyZ21MSplCxpJzMIB05h1I/aIqvNb6MQ35LU28UsVrK3918DHD03hUoCNXbS.
+mount -o loop,offset=4194304 /root/raspios_lite_armhf_latest boot
+echo 'pi:$6$HSRPDe6rqSBNxBnC$B3dJSx59Qd4HAPu.t0PwhlydBsyZ21MSplCxpJzMIB05h1I/aIqvNb6MQ35LU28UsVrK3918DHD03hUoCNXbS.'> boot/userconf
+umount boot/
+```
+the new password is 'mypassword'
 
 After this operation, execute the script to load the unix socket and make it
 available to qemu
@@ -63,7 +73,7 @@ In a shell on your raspberry pi do:
 ```
 $ sudo su -
 # echo 4 >/sys/class/gpio/export
-# echo in >/sys/class/gpio/direction
+# echo in >/sys/class/gpio/gpio4/direction
 ```
 
 The main commands in the `qemu-rpi-gpio` application are:
@@ -83,7 +93,7 @@ For instance, let us set the value of the pre-exported gpio 4
 Now you can read the value of your gpio 
 
 ```
-# cat /sys/class/gpio/value
+# cat /sys/class/gpio/gpio4/value
 1
 ```
 
@@ -92,6 +102,6 @@ If we set it to zero, it will be immediately reflected in the guest system
 (gpio)> set 4 0
 ```
 ```
-# cat /sys/class/gpio/value
+# cat /sys/class/gpio/gpio4/value
 0
 ```
