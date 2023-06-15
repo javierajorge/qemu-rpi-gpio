@@ -40,7 +40,7 @@ Download a raspbian image using
 ```
 ./qemu-pi-setup/setup.sh
 ```
-Becarefull... before stare you need to define a new user and password. 
+Be carefull... before stare you need to define a new user and password. 
 read this https://www.raspberrypi.com/news/raspberry-pi-bullseye-update-april-2022/
 ```
 echo 'mypassword' | openssl passwd -6 -stdin
